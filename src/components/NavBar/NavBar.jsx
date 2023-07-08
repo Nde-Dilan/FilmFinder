@@ -1,12 +1,13 @@
 import React from 'react';
-import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery, Menu } from '@mui/material';
+import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 //TODO: install the @mui/icons-material package 
-// import { Menu,AccountCircle, Brightness4,Brightness7} from '@mui/icons-material'
+import {Menu,AccountCircle, Brightness4,Brightness7} from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import useStyles from './styles'
 
 function NavBar() {
+    //This is to defined different classes through our code
     const classes = useStyles();
     // Is the width is under 600 px then we are on mobile device else weareon laptop
     const isMobile = useMediaQuery('(max-width:600px)')
@@ -33,17 +34,18 @@ function NavBar() {
                 <IconButton color="inherit" sx={{ marginLeft: 1 }} onClick={() => { }}>
                     {/* <Brightness7></Brightness7> */}
                     {
-                        // theme.palette.mode==='dark' ? <Brightness7/>:<Brightness4/>
+                        // dark or light
+                        theme.palette.mode==='dark' ? <Brightness7/>:<Brightness4/>
                     }
                      </IconButton>
                     {/* When we are on desktop we want to see the search bar right after the previous btns */}
                     {!isMobile && 'Search...'}
                     <div>
-                        {/* On mobile qs on Desktop we check if the user is not log in we show a btn to login else we show a button(containing an Avatar component) directing the user tohis/her profile and if we are on desktop we also display 'My Movies'  */}
+                        {/* On mobile as on Desktop we check if the user is not log in we show a btn to login else we show a button(containing an Avatar component) directing the user tohis/her profile and if we are on desktop we also display 'My Movies'  */}
                         {!isAuthenticated
                             ? (
                                 <Button color="inherit" onClick={() => { }}>
-                                    {/* Login &nbssp; <AccountCircle/> */}
+                                    Login &nbssp; <AccountCircle/>
                                 </Button>
                             ) : (
                                 <Button
