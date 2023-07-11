@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-//TODO: install the @mui/icons-material package 
-import {Menu,AccountCircle, Brightness4,Brightness7} from '@mui/icons-material'
+import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import useStyles from './styles'
+import { Sidebar } from '..';
 
 function NavBar() {
+    //
+    const [mobileOpen, setMobileOpen] = useState(false);
     //This is to defined different classes through our code
     const classes = useStyles();
     // Is the width is under 600 px then we are on mobile device else weareon laptop
@@ -17,27 +19,30 @@ function NavBar() {
 
     const isAuthenticated = true
     return (
-        <AppBar position="fixed">
-            <Toolbar className={classes.toolbar}>
-                {/* if we are on mobile i want a Menu btn followed by a sun btn to toggle theme mode */}
-                {isMobile && (
-                    <IconButton
-                        color="inherit"
-                        edge="start"
-                        style={{ outline: 'none' }}
-                        onClick={() => { }}
-                        className={classes.menuBtn}
-                    >
-                        <Menu />
+        <>
+            {/* Nav Bar */}
+            <AppBar position="fixed">
+                <Toolbar className={classes.toolbar}>
+                    {/* if we are on mobile i want a Menu btn followed by a sun btn to toggle theme mode */}
+                    {isMobile && (
+                        <IconButton
+                            color="inherit"
+                            edge="start"
+                            style={{ outline: 'none' }}
+                            //To open the side bar
+                            onClick={() => { setMobileOpen((previousMobileOpen) => !previousMobileOpen) }}
+                            className={classes.menuBtn}
+                        >
+                            <Menu />
+                        </IconButton>
+                    )}
+                    <IconButton color="inherit" sx={{ marginLeft: 1 }} onClick={() => { }}>
+                        {/* <Brightness7></Brightness7> */}
+                        {
+                            // dark or light
+                            theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />
+                        }
                     </IconButton>
-                )}
-                <IconButton color="inherit" sx={{ marginLeft: 1 }} onClick={() => { }}>
-                    {/* <Brightness7></Brightness7> */}
-                    {
-                        // dark or light
-                        theme.palette.mode==='dark' ? <Brightness7/>:<Brightness4/>
-                    }
-                     </IconButton>
                     {/* When we are on desktop we want to see the search bar right after the previous btns */}
                     {!isMobile && 'Search...'}
                     <div>
@@ -45,7 +50,7 @@ function NavBar() {
                         {!isAuthenticated
                             ? (
                                 <Button color="inherit" onClick={() => { }}>
-                                    Login &nbssp; <AccountCircle/>
+                                    Login &nbssp; <AccountCircle />
                                 </Button>
                             ) : (
                                 <Button
@@ -66,9 +71,34 @@ function NavBar() {
                     </div>
                     {/* On mobile we display the search bar after the other components */}
                     {isMobile && 'Search...'}
-               
-            </Toolbar>
-        </AppBar>
+
+                </Toolbar>
+            </AppBar>
+            {/* Side Bar */}
+            <div className="">
+                <nav className={classes.drawer}>
+                    {isMobile ? (
+                        <Drawer
+                            variant='temporary'
+                            anchor='right'
+                            // Bad practice tochange the state using its previous value onClose={()=>{setMobileOpen(!mobileOpen)}}
+                            onClose={() => { setMobileOpen((previousMobileOpen) => !previousMobileOpen) }}
+                            open={mobileOpen}
+                            classes={{ paper: classes.drawerPaper }}
+                            ModalProps={{ keepMounted: true }}>
+                            <Sidebar setMobileOpen={setMobileOpen} />
+
+                        </Drawer>
+                    ) : (
+                        <Drawer classes={{ paper: classes.paper }} variant='permanent' open>
+                            <Sidebar setMobileOpen={setMobileOpen} />
+                        </Drawer>
+
+                    )}
+                </nav>
+            </div>
+
+        </>
     );
 }
 export default NavBar;

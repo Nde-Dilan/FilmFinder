@@ -1,5 +1,6 @@
 import { makeStyles } from "@mui/styles";
 
+const drawerWidth=240
 export default makeStyles((theme) => ({
     toolbar: {
         display:'flex',
@@ -19,5 +20,23 @@ export default makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]:{
             display:'none',
         }
-     }
+     },
+     drawer:{
+        //We want it to appear when we aren't on mobile device
+        [theme.breakpoints.up('sm')]:{
+            width:drawerWidth,
+            flexShrink:0,
+        },
+     },
+     drawerPaper:{
+        //This is to demonstrate that we can use js expression directly inside css such as variable or if condition
+        width:drawerWidth,
+     },
+     linkBtn:{
+        //This is the code for the hover effect in CSS in JS
+        '&:hover':{
+            color:'white !important',
+            textDecoration:'none',
+        },
+     },
 }));
