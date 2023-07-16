@@ -10,8 +10,8 @@ export default makeStyles((theme) => ({
         //For this .down towork don't forget tosetup a ThemeProvider inside the index.js file
         [theme.breakpoints.down('sm')]:{
             marginLeft:0,
-            backgroundColor:'black',
-            flexWrapp:'wrapp',
+            flexWrap:'wrap',
+            height:'90px',
         }
      },
      menuBtn:{
