@@ -15,6 +15,6 @@ export default makeStyles(theme=>({
     },
     genreImages:{
         // the invert func is a css func() that takes a value(0-1 or %) and inverse proportionaly the color of the given image
-        filter: theme.palette.mode === 'dark'? 'dark': 'invert(1)'
+        filter: theme.palette.mode === 'dark'? 'invert(1)': 'dark'
     }
 }))

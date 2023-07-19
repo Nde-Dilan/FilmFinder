@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Box, CircularProgress, UseMediaQuery, Typography } from '@mui/material';
+//redux stuff
 import { useSelector } from 'react-redux';
+import  {selectGenreOrCategory}  from '../../feautures/currentGenreOrCategory';
+//Api calls
 import { useGetMoviesQuery } from '../../services/TMDB';
 import { MovieList } from '..';
 
 const Movies = () => {
-  const { data,error,isFetching } = useGetMoviesQuery();
+  const [page, setPage] = useState(1);
+  
+  const {genreIdOrCategoryName, searchQuery}=useSelector((state)=>state.currentGenreOrCategory);
+  //Now that we have the info about the category or genre let's fetch data base on that
+  const { data,error,isFetching } = useGetMoviesQuery({genreIdOrCategoryName,page,searchQuery});
+  //the data passed here are getting intercepted inside the tmdb.js service
   if(isFetching){
     return (
       <Box display="flex" justifyContent="center">
@@ -25,6 +33,7 @@ const Movies = () => {
     )
   }
   if(error){
+    console.log(error)
     return " An error has occured."
   }
   console.log(data);

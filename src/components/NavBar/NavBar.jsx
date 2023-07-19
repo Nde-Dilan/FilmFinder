@@ -4,7 +4,9 @@ import { useTheme } from '@mui/material/styles';
 import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import useStyles from './styles'
-import { Sidebar } from '..';
+import { Search, Sidebar } from '..';
+import fetchToken, { createSessionId, movieApi } from '../../utils';
+import { useEffect } from 'react';
 
 function NavBar() {
     //
@@ -16,8 +18,23 @@ function NavBar() {
     // This material ui hook is to now when we are on dark/light mode
     const theme = useTheme()
     // To know if the user is authentificated or not
+    const isAuthenticated = false
+    //Get the user's token and session id
 
-    const isAuthenticated = true
+    const token = localStorage.getItem('request_token');
+    const sessionIdFromLocalStorage =localStorage.getItem('session_id');
+    //useEfect : synchronize component with an external sys
+    useEffect(()=>{
+        const loginUser = async ()=>{
+            if(token){
+            if(sessionIdFromLocalStorage){
+                const {data:userData} = await movieApi.get(`/account?session_id=${sessionIdFromLocalStorage}`)
+            }else{
+                const session_id = await createSessionId();
+                const {data:userData} = await movieApi.get(`/account?session_id=${session_id}`)
+            }
+        }}
+    },[token])
     return (
         <>
             {/* Nav Bar */}
@@ -44,13 +61,13 @@ function NavBar() {
                         }
                     </IconButton>
                     {/* When we are on desktop we want to see the search bar right after the previous btns */}
-                    {!isMobile && 'Search...'}
+                    {!isMobile && <Search/>}
                     <div>
                         {/* On mobile as on Desktop we check if the user is not log in we show a btn to login else we show a button(containing an Avatar component) directing the user tohis/her profile and if we are on desktop we also display 'My Movies'  */}
                         {!isAuthenticated
                             ? (
-                                <Button color="inherit" onClick={() => { }}>
-                                    Login &nbssp; <AccountCircle />
+                                <Button color="inherit" onClick={fetchToken}>
+                                    Login &nbsp; <AccountCircle />
                                 </Button>
                             ) : (
                                 <Button
@@ -70,7 +87,8 @@ function NavBar() {
                             )}
                     </div>
                     {/* On mobile we display the search bar after the other components */}
-                    {isMobile && 'Search...'}
+                    
+                    {isMobile && <Search/>}
 
                 </Toolbar>
             </AppBar>

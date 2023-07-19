@@ -22,13 +22,15 @@ export default makeStyles((theme) => ({
         borderRadius:'20px',
         height:'360px',
         marginBottom:'10px',
+        // marginLeft:'10px',
+        // marginRight:'10px',
         '&:hover':{
             transform:'scale(1.05)',
         },
     },
     title:{
         color:theme.palette.text.primary,
-        textOverflow:'ellipsis',
+        textOverflow:'ellipsis',//if we have a long title cut it and add ...
         width:'230px',
         whiteSpace:'nowrap',
         overflow:'hidden',
