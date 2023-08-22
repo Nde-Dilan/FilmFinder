@@ -4,36 +4,46 @@ import { useTheme } from '@mui/material/styles';
 import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import useStyles from './styles'
+import { useDispatch,useSelector } from 'react-redux';
+import { setUser,userSelector } from '../../feautures/auth'
 import { Search, Sidebar } from '..';
 import fetchToken, { createSessionId, movieApi } from '../../utils';
 import { useEffect } from 'react';
 
 function NavBar() {
+    const {isAuthenticated,user} = useSelector(userSelector);
+    console.log(isAuthenticated);
     //
     const [mobileOpen, setMobileOpen] = useState(false);
     //This is to defined different classes through our code
     const classes = useStyles();
     // Is the width is under 600 px then we are on mobile device else weareon laptop
-    const isMobile = useMediaQuery('(max-width:600px)')
+    const isMobile = useMediaQuery('(max-width:685px)')
     // This material ui hook is to now when we are on dark/light mode
     const theme = useTheme()
-    // To know if the user is authentificated or not
-    const isAuthenticated = false
     //Get the user's token and session id
-
+    console.log(user);
     const token = localStorage.getItem('request_token');
     const sessionIdFromLocalStorage =localStorage.getItem('session_id');
-    //useEfect : synchronize component with an external sys
+
+    const dispatch = useDispatch();
+    //useEfect : synchronize component with an external sys if the token change call loginUser again
     useEffect(()=>{
         const loginUser = async ()=>{
-            if(token){
+            if(token){ 
             if(sessionIdFromLocalStorage){
+
                 const {data:userData} = await movieApi.get(`/account?session_id=${sessionIdFromLocalStorage}`)
+                 
+                dispatch(setUser(userData))
             }else{
                 const session_id = await createSessionId();
+
                 const {data:userData} = await movieApi.get(`/account?session_id=${session_id}`)
+                dispatch(setUser(userData))
             }
-        }}
+        }};
+        loginUser();
     },[token])
     return (
         <>
@@ -73,7 +83,7 @@ function NavBar() {
                                 <Button
                                     color="inherit"
                                     component={Link}
-                                    to="/profile/:id"
+                                    to={`/profile/${user.id}`}
                                     className={classes.linkBtn}
                                     onClick={() => { }}
                                 >

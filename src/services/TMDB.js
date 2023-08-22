@@ -1,7 +1,7 @@
 //Here will goes the code for all the data fetching , the store of our entire app willcome from here
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const tmdbApiKey = process.env.REACT_APP_TMDB_KEY;
+export const tmdbApiKey = process.env.REACT_APP_TMDB_KEY;
 
 //movie/changes?page=1
 
@@ -36,6 +36,28 @@ export const tmdbApi = createApi({
                //INFO: Get popular movies
                 return `movie/popular?page=${page}&api_key=${tmdbApiKey}`;
             }
+        }),
+        //INFO: Get a specific movie
+        getMovie : builder.query({
+            query:(id)=>`/movie/${id}?append_to_response=videos,credits&api_key=${tmdbApiKey}`
+        }),
+        //INFO: Get a specific cast for a movie
+        getCasting : builder.query({
+            query:(id)=>`/movie/${id}/credits?api_key=${tmdbApiKey}`
+        }),
+         //INFO: Get user specific list
+        getRecommendation: builder.query({
+            query:({movie_id,list})=>`movie/${movie_id}/${list}?api_key=${tmdbApiKey}`
+        }),
+         //INFO: Get details about an actor
+        getActorInfo: builder.query({
+            query:(actor_id)=>`person/${actor_id}?api_key=${tmdbApiKey}`
+        })
+        ,
+         //INFO: Get details about an actor
+        getActorMovieInfo: builder.query({
+            // query:({id,page})=>`person/${id}/movie_credits?api_key=${tmdbApiKey}`
+            query:({id,page})=>`/discover/movie?with_cast=${id}&page=${page}&api_key=${tmdbApiKey}`
         })
     })
 })
@@ -44,6 +66,11 @@ export const tmdbApi = createApi({
 export const {
     useGetMoviesQuery,
     useGetGenresQuery,
+    useGetMovieQuery,
+    useGetCastingQuery,
+    useGetRecommendationQuery,
+    useGetActorInfoQuery,
+    useGetActorMovieInfoQuery
 } = tmdbApi;
 
 //Now we can just use this hook wherever we want tofetch movies data
