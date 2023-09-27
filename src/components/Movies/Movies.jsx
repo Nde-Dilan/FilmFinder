@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Box, CircularProgress, UseMediaQuery, Typography } from '@mui/material';
+import { Box, CircularProgress, UseMediaQuery, Typography, useMediaQuery } from '@mui/material';
 //redux stuff
 import { useSelector } from 'react-redux';
 import  {selectGenreOrCategory}  from '../../feautures/currentGenreOrCategory';
 //Api calls
 import { useGetMoviesQuery } from '../../services/TMDB';
-import { MovieList } from '..';
-
+import { MovieList, Pagination } from '..';
+//INFO: Adding the pagination functionality 25/09
+//TODO: check this (min-width:900px and max-width:1030px) and arrange the UI from 900px to 1030px
 const Movies = () => {
+
+  const large = useMediaQuery('(min-width:900px and max-width:1030px)');
+  const numberOfMovies = large ? 16 : 18;
+
+
   const [page, setPage] = useState(1);
   
   const {genreIdOrCategoryName, searchQuery}=useSelector((state)=>state.currentGenreOrCategory);
@@ -39,7 +45,8 @@ const Movies = () => {
   console.log(data);
   return (
     <div className="">
-      <MovieList movies={data} />
+      <MovieList movies={data} numberOfMovie={8} />
+      <Pagination currentPage={page} setPage={setPage} totalPages={data?.total_pages} />
     </div>
   );
 }

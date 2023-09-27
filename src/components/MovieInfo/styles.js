@@ -7,25 +7,27 @@ export default makeStyles((theme) => ({
     justifyContent:'space-around',
     margin:'10px 0 !important',
     [theme.breakpoints.down('sm')]:{
+        padding:'0',
         flexDirection:'column',
+        width:'100%',
         flexWrap:'wrap',
+        marginBottom: '2rem',
     }
    },
    poster:{
-    borderRadius:'20px',
-    boxShadow:'0.5em 1em 1em rgb(64,64,64)',
-    width:'80%',
-    [theme.breakpoints.down('md')]:{
-        width:'50%',
-        height:'350px',
-        margin:'0 auto',
+    borderRadius: '20px',
+    boxShadow: '0.5em 1em 1em rgb(64, 64, 70)',
+    width: '80%',
+    [theme.breakpoints.down('md')]: {
+      margin: '0 auto !important',
+      width: '50%',
     },
-    [theme.breakpoints.down('sm')]:{
-        width:'100%',
-        height:'350px',
-        margin:'0 auto',
-        marginBottom:'30px',
-    }
+    [theme.breakpoints.down('sm')]: {
+      margin: '0 auto !important',
+      width: '100%',
+      height: '350px',
+      marginBottom: '30px',
+    },
    },
    genres:{
     margin:'10px 0 !important',
@@ -41,6 +43,7 @@ export default makeStyles((theme) => ({
    links:{
     display:'flex',
     textDecoration:'none',
+    color:'aqua',
     justifyContent:'center',
     alignItems:'center',
     [theme.breakpoints.down('sm')]:{
@@ -60,6 +63,8 @@ export default makeStyles((theme) => ({
     width:"100%",
     [theme.breakpoints.down('sm')]:{
         flexDirection:"column",
+        justifyContent:"center",
+        // margin:'100px',
     },
    },
    modal:{

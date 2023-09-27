@@ -59,7 +59,7 @@ const MovieInfo = (props) => {
   }
   return (
     <Grid container className={classes.container}>
-      <Grid item sm={12} lg={4}>
+      <Grid item sm={12} lg={4} style={{display:'flex'}}>
         <img 
         className={classes.poster}
         alt={data.original_title}
@@ -78,7 +78,7 @@ const MovieInfo = (props) => {
             </Typography>
           </Box>
           <Typography variant='h6' align='center' gutterBottom>
-            {data?.runtime} mins {data?.spoken_languages.length > 0 ? `/${data?.spoken_languages[0]?.name}` : '' } 
+            {data?.runtime} mins {`| Language: ${data?.spoken_languages[0]?.name}`} 
           </Typography>
         </Grid>
         <Grid item className={classes.genres}>
@@ -109,14 +109,14 @@ const MovieInfo = (props) => {
         <Grid item container style={{marginTop:'2rem'}}>
           <div className={classes.btnContainer}>
             <Grid item xs={12} sm={6} className={classes.btnContainer}>
-              <ButtonGroup size='small' variant='outline'>
+              <ButtonGroup size='small' variant='outlined'>
                 <Button target="_blank" rel="no openner noreferer" href={data?.homepage}  endIcon={<Language/>}>Website</Button>
                 <Button target="_blank" rel="no openner noreferer" href={`https://www.imdb.com/title/${data?.id}`}  endIcon={<MovieIcon/>}>IMDB</Button>
                 <Button onClick={()=>{setOpen(true)}} href='#' endIcon={<Theaters/>}>Trailer</Button>
               </ButtonGroup>
             </Grid> 
             <Grid item xs={12} sm={6} className={classes.btnContainer}>
-              <ButtonGroup size='small' variant='outline'>
+              <ButtonGroup size='small' variant='outlined'>
                 <Button onClick={addToFavorites} endIcon={isMovieFavorited ? <FavoriteBorderOutlined/> : <Favorite/> }>{isMovieFavorited ? 'Unfavorite' : 'Favorite'} </Button>
 
                 <Button onClick={addToWatchList} endIcon={isMovieWatchlisted ? <Remove/> : <PlusOne/> }>Watchlist </Button>

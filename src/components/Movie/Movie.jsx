@@ -4,7 +4,7 @@ import { Typography, Grid, Grow, Tooltip, Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import useStyles from './styles';
-//TODO:From 600px to 780 the ui is not very good , so we have to add a media query for that and reduce the size of each movie poster
+//TODO:From 600px to 780 the ui is not very user friendly , so we have to add a media query for that and reduce the size of each movie poster
 function Movie({ movie, index }) {
   const classes = useStyles();
   // console.log(movie, index);

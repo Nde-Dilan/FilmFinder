@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
+import './index.css'
 //react-router-dom setup
 import { BrowserRouter } from 'react-router-dom';
 //Material ui  setup

@@ -5,12 +5,16 @@ export default makeStyles((theme) => ({
     toolbar: {
         display:'flex',
         height:'80px',
+        // width:'100%',
+        // paddingLeft:'0',
         justifyContent:'space-between',
         marginLeft:'240px',
         //For this .down towork don't forget tosetup a ThemeProvider inside the index.js file
         [theme.breakpoints.down('sm')]:{
-            marginLeft:0,
+            
+            marginLeft:'0',
             flexWrap:'wrap',
+            paddingLeft:'0',
             height:'90px',
         }
      },

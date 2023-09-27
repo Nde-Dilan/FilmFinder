@@ -4,11 +4,12 @@ import { useGetActorInfoQuery, useGetActorMovieInfoQuery } from '../../services/
 import { Box, Button, ButtonGroup, CircularProgress, Grid, Typography } from '@mui/material';
 import useStyles from './styles';
 import { ArrowBack } from '@mui/icons-material';
-import MovieList from '../MovieList/MovieList';
+import {MovieList,Pagination} from '..';
 function Actors() {
 
-    const classes = useStyles()
-    const page =1
+    const classes = useStyles();
+
+    const [page, setPage] = useState(1);
 
     const history = useHistory();
     console.log(history);
@@ -16,7 +17,8 @@ function Actors() {
     const {id} = useParams();
     const {data:movies,isFetching:isFetch,error:err} = useGetActorMovieInfoQuery({id,page});
     const data1 = useGetActorMovieInfoQuery(id);
-    console.log(data1);
+    console.log("movies----------------------------------->");
+    console.log(movies);
 
     const {data,isFetching,error} = useGetActorInfoQuery(id);
     // console.log(data);
@@ -77,10 +79,10 @@ function Actors() {
             <Box margin="2rem 0" width="100%">
         <Typography variant='h3' gutterBottom align='center'>Movies</Typography>
         {/* Loop throug the recommended movie */}
-        {movies ?
+        {movies &&
         <MovieList movies={movies} numberOfMovie={12}/>
-      :
-      <Box>Sorry Nothing Was Found ...</Box>}
+      }
+      <Pagination currentPage={page} setPage={setPage} totalPages={movies?.total_pages} />
       </Box>
         </Grid>
     );

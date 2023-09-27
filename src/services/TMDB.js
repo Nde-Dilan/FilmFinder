@@ -73,4 +73,4 @@ export const {
     useGetActorMovieInfoQuery
 } = tmdbApi;
 
-//Now we can just use this hook wherever we want tofetch movies data
+//Now we can just use this hook wherever we want to fetch movies data
