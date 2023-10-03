@@ -6,16 +6,33 @@ import { userSelector } from '../../feautures/auth'
 
 import { Typography,Button,Box } from '@mui/material';
 import { ExitToApp, Logout } from '@mui/icons-material';
+import { useGetListQuery } from '../../services/TMDB';
+import {RatedCards} from '..';
+export const logOut = ()=>{
+  localStorage.clear();
+
+  window.location.href = "/";
+}
+
 const Profile = ()=> {
+
+  //Getting info about the user
+  const { user } = useSelector(userSelector);
+  /* get watchlist and favorites hooks */
+  const {data:favoritesMovies,refetch:refetchFavorites} = useGetListQuery({listName:'favorite/movies',accountId:user.id,sessionId:localStorage.getItem('session_id'),page:1});
+  const {data:watchlistMovies, refetch:refetchWhatchlisted} = useGetListQuery({listName:'watchlist/movies',accountId:user.id,sessionId:localStorage.getItem('session_id'),page:1});
+
+
   console.log('Profile');
   const {user:{username}}=useSelector(userSelector);
 
-  const logOut = ()=>{
-    localStorage.clear();
+  useEffect(()=>{
+    refetchFavorites();
+    refetchWhatchlisted();
+  },[])
 
-    window.location.href = "/";
-  }
-  const favoriteMovies = [];
+
+ 
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" >
@@ -24,10 +41,13 @@ const Profile = ()=> {
           Logout &nbsp;<ExitToApp/>
         </Button>
       </Box>
-      {!favoriteMovies.length 
+      {console.log(favoritesMovies)}
+      {!favoritesMovies?.results?.length && !watchlistMovies?.results?.length
       ? <Typography variant='h5'>Add favorites or watchlist some movies to see them here! </Typography>
-      : <Box>
-        FAVORITE MOVIES
+      : <Box> 
+        {console.log(favoritesMovies)}
+       <RatedCards title="Favorite Movies" data={favoritesMovies} />
+       <RatedCards title="Whatchlist" data={watchlistMovies} />
       </Box>
      }
     </Box>

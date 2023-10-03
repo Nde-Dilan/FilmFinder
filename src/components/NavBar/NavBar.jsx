@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material'
@@ -9,7 +9,7 @@ import { setUser,userSelector } from '../../feautures/auth'
 import { Search, Sidebar } from '..';
 import fetchToken, { createSessionId, movieApi } from '../../utils';
 import { useEffect } from 'react';
-
+import { ColorModeContext } from '../../utils/ToggleColorMode';
 function NavBar() {
     const {isAuthenticated,user} = useSelector(userSelector);
     console.log(isAuthenticated);
@@ -21,6 +21,7 @@ function NavBar() {
     const isMobile = useMediaQuery('(max-width:685px)')
     // This material ui hook is to now when we are on dark/light mode
     const theme = useTheme()
+    const colorMode = useContext(ColorModeContext);
     //Get the user's token and session id
     console.log(user);
     const token = localStorage.getItem('request_token');
@@ -43,7 +44,12 @@ function NavBar() {
                 dispatch(setUser(userData))
             }
         }};
-        loginUser();
+        try{
+
+            loginUser();
+        }catch(err){
+            alert("Please check your internet connection and try again:).")
+        }
     },[token])
     return (
         <>
@@ -63,7 +69,7 @@ function NavBar() {
                             <Menu />
                         </IconButton>
                     )}
-                    <IconButton color="inherit" sx={{ marginLeft: 1 }} onClick={() => { }}>
+                    <IconButton color="inherit" sx={{ marginLeft: 1 }} onClick={colorMode.toggleColorMode}>
                         {/* <Brightness7></Brightness7> */}
                         {
                             // dark or light
@@ -85,13 +91,14 @@ function NavBar() {
                                     component={Link}
                                     to={`/profile/${user.id}`}
                                     className={classes.linkBtn}
-                                    onClick={() => { }}
+                                    
                                 >
                                     {!isMobile && <>My Movies &nbsp;</>}
                                     {/* Display the profile icon on both cases */}
                                     <Avatar
                                         style={{ width: 30, height: 30 }}
                                         alt="Profile"
+                                        src={`https://www.themoviedb.org/t/p/w64_and_h64_face${user?.avatar?.tmdb?.avatar_path}`}
                                     />
                                 </Button>
                             )}

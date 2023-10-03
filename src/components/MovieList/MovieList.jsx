@@ -4,11 +4,13 @@ import useStyles from './styles';
 import {Movie} from "..";
 
 
-const MovieList = ({movies,numberOfMovie}) => {
+const MovieList = ({movies,numberOfMovie, excludeFirst}) => {
+
+  const startFrom = excludeFirst ? 1 : 0;
   const classes = useStyles();
   return (
     <Grid container className={classes.moviesContainer}>
-      {(movies?.results ? movies?.results: movies).slice(0,numberOfMovie).map((movie,index)=>(
+      {(movies?.results ? movies?.results: movies).slice(startFrom,numberOfMovie).map((movie,index)=>(
         <Movie key={index} movie={movie} index={index}/>
       ))}
       </Grid>

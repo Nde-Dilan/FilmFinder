@@ -9,6 +9,10 @@ body {
 *,a:-webkit-any-link{
   text-decoration: none;
 }
+a{
+  text-decoration: none;
+  color: rgb(46, 86, 196);
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

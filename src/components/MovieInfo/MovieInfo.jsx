@@ -1,47 +1,86 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal,Typography,useMediaQuery,Rating,Box,Grid,ButtonGroup,Button,CircularProgress } from '@mui/material';
 import { Movie as MovieIcon,Theaters,Language,PlusOne,Favorite,FavoriteBorderOutlined,Remove,ArrowBack } from '@mui/icons-material';
 import {Link,useParams} from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import axios from 'axios';
-import { tmdbApiKey,useGetRecommendationQuery, useGetMovieQuery,useGetCastingQuery } from '../../services/TMDB';
+import { tmdbApiKey,useGetRecommendationQuery, useGetMovieQuery,useGetCastingQuery, useGetListQuery } from '../../services/TMDB';
 
 import  {selectGenreOrCategory}  from '../../feautures/currentGenreOrCategory';
 import genreIcons from '../../assets/genres';
 import useStyles from './styles';
 import {MovieList}  from '..';
+import { userSelector } from '../../feautures/auth';
 
 
 const MovieInfo = (props) => {
+
+  
   const {id} = useParams();
+  const {data,isFetching,error} = useGetMovieQuery(id); 
+
+
+  const { user } = useSelector(userSelector);
+
   // const fetchCasting= async ()=>{
   //   const cast = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits&api_key=${tmdbApiKey}`);
   //   console.log(cast);
-  const isMovieFavorited = true;
-  const isMovieWatchlisted = true;
+  const [isMovieFavorited, setIsMovieFavorited] = useState(false);
+  const [isMovieWatchlisted, setisMovieWatchlisted] = useState(false);
+  
+ 
+  // fetchCasting(); 
 
-  const addToFavorites = ()=>{
-
-  }
-  const addToWatchList = ()=>{
-    
-  }
-  // fetchCasting();
   const dispatch = useDispatch();
   const classes = useStyles();
+
+  const dataCast = useGetCastingQuery(id);
+  const {data:recommendation,isFetching:isRecommendationFetching}= useGetRecommendationQuery({list:'/recommendations',movie_id:id});
+  console.log(recommendation);
+  /* get watchlist and favorites hooks */
+  const {data:favoritesMovies,refetch:refetchFavorites} = useGetListQuery({listName:'favorite/movies',accountId:user.id,sessionId:localStorage.getItem('session_id'),page:1});
+  const {data:watchlistMovies, refetch:refetchWhatchlisted} = useGetListQuery({listName:'watchlist/movies',accountId:user.id,sessionId:localStorage.getItem('session_id'),page:1});
+
+
+  //To know if the movie was watchlisted or not (favorited or not)
+  useEffect(() => {
+    setIsMovieFavorited(!!favoritesMovies?.results?.find((movie)=>movie?.id===data?.id));
+  }, [favoritesMovies, data])
+  
+  useEffect(() => {
+    setisMovieWatchlisted(!!watchlistMovies?.results?.find((movie)=>movie?.id===data?.id));
+  }, [watchlistMovies, data])
+  
+
+     /* Add to watch list and favorites functions */
+     const addToFavorites = async ()=>{
+      await axios.post(`https://api.themoviedb.org/3/account/${user.id}/favorite?api_key=${process.env.REACT_APP_TMDB_KEY}&session_id=${localStorage.getItem('session_id')}`,{
+        media_type:'movie',
+        media_id:id,
+        favorite:!isMovieFavorited,
+      });
+      console.log("isMovieFavorited----------------->");
+      console.log(isMovieFavorited);
+      setIsMovieFavorited((prev)=>!prev);
+    }
+    const addToWatchList = async ()=>{
+      await axios.post(`https://api.themoviedb.org/3/account/${user.id}/watchlist?api_key=${process.env.REACT_APP_TMDB_KEY}&session_id=${localStorage.getItem('session_id')}`,{
+        media_type:'movie',
+        media_id:id,
+        watchlist:!isMovieWatchlisted,
+      });
+      setisMovieWatchlisted((prev)=>!prev);
+      console.log(isMovieWatchlisted);
+  
+    }
   
   //open the modal with the trailer
 
   const [open, setOpen] = useState(false);
 
-  const dataCast = useGetCastingQuery(id);
-  const {data:recommendation,isFetching:isRecommendationFetching}= useGetRecommendationQuery({list:'/recommendations',movie_id:id});
   
-  console.log(recommendation);
   //Getting the id from the url
 
-  const {data,isFetching,error} = useGetMovieQuery(id); 
-  console.log(dataCast);
   // console.log(data.poster_path);
   if(isFetching){
     return(
@@ -117,6 +156,7 @@ const MovieInfo = (props) => {
             </Grid> 
             <Grid item xs={12} sm={6} className={classes.btnContainer}>
               <ButtonGroup size='small' variant='outlined'>
+                
                 <Button onClick={addToFavorites} endIcon={isMovieFavorited ? <FavoriteBorderOutlined/> : <Favorite/> }>{isMovieFavorited ? 'Unfavorite' : 'Favorite'} </Button>
 
                 <Button onClick={addToWatchList} endIcon={isMovieWatchlisted ? <Remove/> : <PlusOne/> }>Watchlist </Button>

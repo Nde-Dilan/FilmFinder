@@ -10,6 +10,12 @@ export const tmdbApi = createApi({
     reducerPath: 'tmdbApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://api.themoviedb.org/3' }),
     endpoints: (builder) => ({
+        //INFO:Get favorited and watchlisted movie for a specific user
+        getList :builder.query({
+            query:({listName,accountId,sessionId,page})=>{
+                return `/account/${accountId}/${listName}?api_key=${tmdbApiKey}&session_id=${sessionId}&page=${page}`;
+            }
+        }),
         //INFO:Get genres
         getGenres:builder.query({
             query:()=>{
@@ -64,6 +70,7 @@ export const tmdbApi = createApi({
 
 //When ever you build an endpoint using createApi(such as getMovies()),redux toolkit querry automaticaly create a hook for us
 export const {
+    useGetListQuery,
     useGetMoviesQuery,
     useGetGenresQuery,
     useGetMovieQuery,
