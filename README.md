@@ -1,70 +1,111 @@
-# Getting Started with Create React App
+# Film Finder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Film Finder is a cutting-edge movie search application that seamlessly merges creative excellence with state-of-the-art technologies. Leveraging React.js for its dynamic user interface, Redux Toolkit for robust state management, Material UI for sleek design elements, and Alan AI for innovative voice functionalities, the app delivers an unparalleled user experience.
 
-## Available Scripts
+## Functionalities
 
-In the project directory, you can run:
+### User Authentication and Account Management
+Film Finder provides secure user authentication, allowing users to create accounts, log in, and log out seamlessly. Users can manage their account settings and preferences.
 
-### `npm start`
+![Placeholder for Application Screenshot 1](./public/img/login.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Intuitive Search Capabilities
+Search for movies effortlessly using either text input or voice commands. Alan AI acts as an in-app voice assistant, enabling intuitive conversational experiences for Film Finder users.
 
-### `npm test`
+![Placeholder for Application Screenshot 2](./public/img/search.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### Personalized Watchlist and Favorites
+Users can curate their movie preferences by adding films to their watchlist and favorites. Movies can be effortlessly added or removed, ensuring a tailored viewing experience.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Placeholder for Application Screenshot 3](./public/img/fav.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Dynamic Sorting and Filtering
+Explore movies based on genres and categories, enhancing the browsing experience. The application allows dynamic sorting and filtering, ensuring users find movies that align with their interests effortlessly.
 
-### `npm run eject`
+### Adaptive User Interface
+Film Finder boasts a responsive design that adapts seamlessly to various screen platforms. Whether on a desktop, tablet, or smartphone, users can enjoy a consistent and user-friendly interface.   
+![Placeholder for Application Screenshot 3](./public/img/movieInfo-dark.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Dark Mode for Enhanced Viewing
+Enhance your viewing experience with Film Finder's dark mode. Switch effortlessly between light and dark modes to suit your preference and reduce eye strain during nighttime usage.
+![Placeholder for Application Screenshot 3](./public/img/home.jpg)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Voice-Activated & Trailer Features 
+Utilize voice commands for tasks such as logging in, searching for movies, and managing your watchlist. Alan AI's voice functionalities make navigation effortless, enhancing accessibility and user convenience.Watch the trailer of a movie and then watchlist it to see it later.
+![Placeholder for Application Screenshot 3](./public/img/Trailer.png)   
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+![Placeholder for Application Screenshot 2](./public/star.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Installation
 
-### Code Splitting
+To run Film Finder locally on your machine, follow these steps:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. **Clone the Repository:**
+   ```
+   git clone https://github.com/Nde-Dilan/FilmFinder.git
+   ```
 
-### Analyzing the Bundle Size
+2. **Navigate to the Project Directory:**
+   ```
+   cd FilmFinder
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+3. **Install Dependencies:**
+   ```
+   npm install
+   ```
 
-### Making a Progressive Web App
+4. **Run the Application:**
+   ```
+   npm start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+5. **Access the Application:**
+   Open your web browser and visit [http://localhost:3000](http://localhost:3000).
 
-### Advanced Configuration
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+We welcome contributions to Film Finder! To contribute, follow these steps:
 
-### Deployment
+1. **Fork the Repository**
+   
+2. **Clone your Fork:**
+   ```
+   git clone https://github.com/your-username/film-finder.git
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+3. **Create a Branch:**
+   ```
+   git checkout -b feature-name
+   ```
 
-### `npm run build` fails to minify
+4. **Make Changes, Add Features, Fix Bugs**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+5. **Commit Changes:**
+   ```
+   git commit -m "Your descriptive commit message"
+   ```
+
+6. **Push to the Branch:**
+   ```
+   git push origin feature-name
+   ```
+
+7. **Create a Pull Request**
+   - Go to your fork on GitHub and click on "New Pull Request."
+   - Provide a descriptive title and overview of the changes.
+   - Submit the Pull Request for review.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
