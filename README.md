@@ -78,7 +78,7 @@ We welcome contributions to Film Finder! To contribute, follow these steps:
    
 2. **Clone your Fork:**
    ```
-   git clone https://github.com/your-username/film-finder.git
+   git clone https://github.com/Nde-Dilan/film-finder.git
    ```
 
 3. **Create a Branch:**
